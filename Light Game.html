@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Light Game Thử thách cho lớp 6A</title>
+  <style>
+      body {
+      font-family: Arial, sans-serif;
+      background-color: #f8f8f8;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+    table {
+      border-collapse: collapse;
+      margin: 20px;
+    }
+
+    td {
+      width: 40px;
+      height: 40px;
+      border: 1px solid #ccc;
+      text-align: center;
+      cursor: pointer;
+      position: relative;
+      background-color: #f0f0f0;
+      transition: background-color 0.3s ease-in-out;
+    }
+
+    td.on {
+      background-color: yellow;
+      box-shadow: 0 0 10px yellow, 0 0 20px yellow, 0 0 30px yellow;
+    }
+
+    button {
+      margin-top: 10px;
+      padding: 10px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+<h1> Thử thách cho lớp 6A </h1>
+<table id="lightTable">
+  <!-- You can use a loop to generate the table rows and cells -->
+  <tr>
+    <td onclick="toggleLight(0, 0)"></td>
+    <td onclick="toggleLight(0, 1)"></td>
+    <td onclick="toggleLight(0, 2)"></td>
+    <td onclick="toggleLight(0, 3)"></td>
+    <td onclick="toggleLight(0, 4)"></td>
+  </tr>
+  <tr>
+    <td onclick="toggleLight(1, 0)"></td>
+    <td onclick="toggleLight(1, 1)"></td>
+    <td onclick="toggleLight(1, 2)"></td>
+    <td onclick="toggleLight(1, 3)"></td>
+    <td onclick="toggleLight(1, 4)"></td>
+  </tr>
+  <tr>
+    <td onclick="toggleLight(2, 0)"></td>
+    <td onclick="toggleLight(2, 1)"></td>
+    <td onclick="toggleLight(2, 2)"></td>
+    <td onclick="toggleLight(2, 3)"></td>
+    <td onclick="toggleLight(2, 4)"></td>
+  </tr>
+  <tr>
+    <td onclick="toggleLight(3, 0)"></td>
+    <td onclick="toggleLight(3, 1)"></td>
+    <td onclick="toggleLight(3, 2)"></td>
+    <td onclick="toggleLight(3, 3)"></td>
+    <td onclick="toggleLight(3, 4)"></td>
+  </tr>
+  <tr>
+    <td onclick="toggleLight(4, 0)"></td>
+    <td onclick="toggleLight(4, 1)"></td>
+    <td onclick="toggleLight(4, 2)"></td>
+    <td onclick="toggleLight(4, 3)"></td>
+    <td onclick="toggleLight(4, 4)"></td>
+  </tr>
+</table>
+
+<button onclick="resetGame()">Reset Game</button>
+
+<script>
+  // Create a 5x5 array to represent the lights
+  let lights = [
+    [false, false, false, false, false],
+    [false, false, false, false, false],
+    [false, false, false, false, false],
+    [false, false, false, false, false],
+    [false, false, false, false, false]
+  ];
+
+  // Function to toggle the state of a light and update adjacent lights
+  function toggleLight(row, col) {
+    lights[row][col] = !lights[row][col];
+    updateLights(row, col);
+    updateTable();
+  }
+
+  // Function to update the state of adjacent lights
+  function updateLights(row, col) {
+    // Define the coordinates of adjacent lights
+    const directions = [
+      { row: -1, col: 0 },
+      { row: 1, col: 0 },
+      { row: 0, col: -1 },
+      { row: 0, col: 1 }
+    ];
+
+    // Loop through each direction and update the adjacent lights
+    directions.forEach(direction => {
+      const newRow = row + direction.row;
+      const newCol = col + direction.col;
+
+      // Check if the new coordinates are within the bounds of the array
+      if (newRow >= 0 && newRow < lights.length && newCol >= 0 && newCol < lights[0].length) {
+        lights[newRow][newCol] = !lights[newRow][newCol];
+      }
+    });
+  }
+
+  // Function to update the table based on the state of the lights array
+  function updateTable() {
+    const table = document.getElementById('lightTable');
+
+    // Loop through each row and cell in the table
+    for (let i = 0; i < lights.length; i++) {
+      for (let j = 0; j < lights[i].length; j++) {
+        const cell = table.rows[i].cells[j];
+
+        // Toggle the class based on the state of the light
+        if (lights[i][j]) {
+          cell.classList.add('on');
+        } else {
+          cell.classList.remove('on');
+        }
+      }
+    }
+  }
+
+  // Function to reset the game
+  function resetGame() {
+    // Reset the lights array to all false
+    lights = [
+      [false, false, false, false, false],
+      [false, false, false, false, false],
+      [false, false, false, false, false],
+      [false, false, false, false, false],
+      [false, false, false, false, false]
+    ];
+
+    // Update the table to reflect the reset state
+    updateTable();
+  }
+
+  // Initial table setup
+  updateTable();
+</script>
+
+</body>
+</html>
